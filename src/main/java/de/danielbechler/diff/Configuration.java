@@ -260,7 +260,18 @@ public class Configuration implements NodeInspector
 		{
 			return true;
 		}
-		return false;
+		else 
+		//Check if any ancestor of this node is in config's included properties
+		{
+			Node n = node;
+			while (!n.isRootNode()) 
+			{
+				if (includedProperties.contains(n.getParentNode().getPropertyPath()))
+					return true;
+				n = n.getParentNode();
+			}
+			return false;
+		}
 	}
 
 	public boolean isExcluded(final Node node)
